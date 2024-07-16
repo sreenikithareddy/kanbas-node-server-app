@@ -6,6 +6,13 @@ const assignment = {
     completed: false,
     score: 0,
   };
+
+  const module = {
+    id: "1",
+    name: "Introduction to NodeJS",
+    description: "This module covers the basics of NodeJS.",
+    course: "Web Development",
+  };
   
   export default function WorkingWithObjects(app) {
     app.get("/lab5/assignment", (req, res) => {
@@ -25,7 +32,7 @@ const assignment = {
         res.status(500).json({ error: "Internal Server Error" });
       }
     });
-  
+
     app.post("/lab5/assignment/score", (req, res) => {
       try {
         assignment.score = req.body.score;
@@ -45,5 +52,24 @@ const assignment = {
         res.status(500).json({ error: "Internal Server Error" });
       }
     });
+
+    app.get("/lab5/module", (req, res) => {
+      res.json(module);
+    });
+  
+    app.get("/lab5/module/name", (req, res) => {
+      res.json(module.name);
+    });
+  
+    app.post("/lab5/module/name", (req, res) => {
+      module.name = req.body.name;
+      res.json(module.name);
+    });
+
+    app.post("/lab5/module/description", (req, res) => {
+      module.description = req.body.description;
+      res.json(module.description);
+    });
+  
   }
   

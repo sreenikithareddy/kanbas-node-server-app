@@ -65,5 +65,88 @@ let todos = [
       });
       res.sendStatus(200);
     });
+
+    app.put("/lab5/todos/:id/title", (req, res) => {
+      const { id } = req.params;
+      const { title } = req.body;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.title = title;
+        res.json(todo);
+      } else {
+        res.status(404).json({ message: "Todo not found" });
+      }
+    });
+  
+    // Route to update a todo's completed status by ID
+    app.put("/lab5/todos/:id/completed", (req, res) => {
+      const { id } = req.params;
+      const { completed } = req.body;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.completed = completed;
+        res.json(todo);
+      } else {
+        res.status(404).json({ message: "Todo not found" });
+      }
+    });
+
+    app.put("/lab5/todos/:id/description", (req, res) => {
+      const { id } = req.params;
+      const { description } = req.body;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.description = description;
+        res.json(todo);
+      } else {
+        res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
+      }
+    });
+
+    app.get("/lab5/todos/:id/description/:description", (req, res) => {
+      const { id, description } = req.params;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.description = description;
+        res.json(todos);
+      } else {
+        res.status(404).json({ message: "Todo not found" });
+      }
+    });
+
+    app.get("/lab5/todos/:id/title/:title", (req, res) => {
+      const { id, title } = req.params;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.title = title;
+        res.json(todos);
+      } else {
+        res.status(404).json({ message: "Todo not found" });
+      }
+    });
+
+    app.get("/lab5/todos/:id/completed/:completed", (req, res) => {
+      const { id, completed } = req.params;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.completed = completed === "true";
+        res.json(todos);
+      } else {
+        res.status(404).json({ message: "Todo not found" });
+      }
+    });
+  
+    // Route to update a todo's description by ID
+    app.get("/lab5/todos/:id/description/:description", (req, res) => {
+      const { id, description } = req.params;
+      const todo = todos.find((t) => t.id === parseInt(id));
+      if (todo) {
+        todo.description = description;
+        res.json(todos);
+      } else {
+        res.status(404).json({ message: "Todo not found" });
+      }
+    });
   }
+  
   
