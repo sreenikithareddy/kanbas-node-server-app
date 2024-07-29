@@ -10,7 +10,7 @@ import ModuleRoutes from './Kanbas/Modules/routes.js';
 import AssignmentRoutes from './Kanbas/Assignments/routes.js';
 import UserRoutes from "./Users/routes.js";
 
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb+srv://sreenikithareddydoddareddy:<password>@atlascluster.mzbtxw.mongodb.net/kanbas?retryWrites=true&w=majority&appName=AtlasCluster";
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb+srv://sreenikithareddydoddareddy:Nikitha@900@atlascluster.mzbtxw.mongodb.net/kanbas?retryWrites=true&w=majority&appName=AtlasCluster";
 
 mongoose.connect(CONNECTION_STRING, {
   useNewUrlParser: true,
