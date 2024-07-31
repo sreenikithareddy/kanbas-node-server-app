@@ -1,36 +1,35 @@
-import Database from "../Database/index.js";
+import * as courseDao from './dao.js';
+import mongoose from 'mongoose';
 
 export default function CourseRoutes(app) {
   // Update a course
-  app.put("/api/courses/:id", (req, res) => {
+  app.put('/api/courses/:id', async (req, res) => {
     const { id } = req.params;
     const course = req.body;
-    Database.courses = Database.courses.map((c) =>
-      c._id === id ? { ...c, ...course } : c
-    );
-    res.sendStatus(204);
+    const updatedCourse = await courseDao.updateCourse(id, course);
+    res.json(updatedCourse);
   });
 
   // Delete a course
-  app.delete("/api/courses/:id", (req, res) => {
+  app.delete('/api/courses/:id', async (req, res) => {
     const { id } = req.params;
-    Database.courses = Database.courses.filter((c) => c._id !== id);
+    await courseDao.deleteCourse(id);
     res.sendStatus(204);
   });
 
   // Add a new course
-  app.post("/api/courses", (req, res) => {
-    const course = {
-      ...req.body,
-      _id: new Date().getTime().toString()
-    };
-    Database.courses.push(course);
-    res.send(course);
+  app.post('/api/courses', async (req, res) => {
+    let course = req.body;
+    course._id = new mongoose.Types.ObjectId().toString();
+    const new_course = await courseDao.createCourse(req.body);
+    res.json(new_course);
   });
 
   // Retrieve all courses
-  app.get("/api/courses", (req, res) => {
-    const courses = Database.courses;
-    res.send(courses);
+  app.get('/api/courses', async (req, res) => {
+    const courses = await courseDao.findAllCourses();
+    res.json(courses);
   });
+
+  
 }

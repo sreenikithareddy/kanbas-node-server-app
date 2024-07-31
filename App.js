@@ -9,6 +9,8 @@ import AssignmentRoutes from './Kanbas/Assignments/routes.js';
 import mongoose from "mongoose";
 import UserRoutes from "./Users/routes.js";
 import session from "express-session";
+import CourseModel from './Kanbas/Courses/model.js'; 
+import coursesData from './Kanbas/Database/courses.js';
 
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
 mongoose.connect(CONNECTION_STRING);
@@ -33,6 +35,17 @@ app.use(cors({
   }   
   app.use(session(sessionOptions));
 app.use(express.json());
+const seedDatabase = async () => {
+    try {
+      await CourseModel.deleteMany({}); 
+      await CourseModel.insertMany(coursesData); 
+      console.log('Database seeded successfully');
+    } catch (error) {
+      console.error('Error seeding database:', error);
+    }
+  };
+  
+  seedDatabase(); 
 CourseRoutes(app);
 UserRoutes(app);
 ModuleRoutes(app);
